@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
+    #a pesquisa é realizada apenas quando o parâmetro :q estiver presente na solicitação
+    if params[:q].present?
+        @users = @users.where("name LIKE ? OR email LIKE ? OR phone LIKE ? OR cpf LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%")
+      end
   end
 
   # GET /users/1 or /users/1.json
